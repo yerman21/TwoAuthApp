@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "736720353638",
+    "firebase_url": "https://factorauthapp-23dc4.firebaseio.com",
+    "project_id": "factorauthapp-23dc4",
+    "storage_bucket": "factorauthapp-23dc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736720353638:android:acfef5edad259349",
+        "android_client_info": {
+          "package_name": "com.yerman.twoauthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736720353638-hb6057h78em3a1f3eqq24am25joqfttr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yerman.twoauthapp",
+            "certificate_hash": "4ceb6706dd414b4d55d5e9c6f236d20120f688f6"
+          }
+        },
+        {
+          "client_id": "736720353638-07tp8l671jql6vterijfsnvv2c7c99c7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYAhL77Ezqh0UhS4xXCBAjyrVEiyVUmMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736720353638-07tp8l671jql6vterijfsnvv2c7c99c7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
