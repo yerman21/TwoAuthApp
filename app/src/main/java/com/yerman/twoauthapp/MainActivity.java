@@ -1,10 +1,16 @@
 package com.yerman.twoauthapp;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.telephony.TelephonyManager;
 import android.view.View;
 
 import androidx.core.view.GravityCompat;
@@ -13,6 +19,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -20,9 +27,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Access a Cloud Firestore instance from your Activity
+    FirebaseFirestore db;
+    EditText txt_phone, txt_user_name;
+    Switch simpleSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +65,42 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        db = FirebaseFirestore.getInstance();
+
+        txt_phone = (EditText) findViewById(R.id.txt_phone);
+        txt_user_name = (EditText) findViewById(R.id.txt_user_name);
+        simpleSwitch = (Switch) findViewById(R.id.swt_confirmar);
+        simpleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    changeStatus(true);
+                    Toast.makeText(MainActivity.this, "Autenticacion Encendida", Toast.LENGTH_SHORT).show();
+                } else {
+                    changeStatus(false);
+                    Toast.makeText(getApplicationContext(),
+                            "Autenticacion Denegada", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
+
+
+    public boolean changeStatus(boolean band_change){
+        boolean band = false;
+        try {
+            db.collection("UserSession").document(txt_user_name.getText().toString())
+                    .update("auth_band", band_change);
+            band = true;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return band;
+    }
+
+
 
     @Override
     public void onBackPressed() {
