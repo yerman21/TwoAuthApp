@@ -2,6 +2,7 @@ package com.yerman.twoauthapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
@@ -23,7 +25,7 @@ import com.yerman.twoauthapp.view.LoginActivity;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //private User user;
+    private User user;
     private final String TAG = "(MainActivity) ";
     private EditText txt_phone, txt_user_name;
     private FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -33,14 +35,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //recibiendo datos de LoginActivity
-        /*try {
+        try {
             user = (User) getIntent().getSerializableExtra("userData");
         }catch (Exception e){
             Log.d(TAG, "error inesperado");
         }
-*/
-        //if(user == null){
-        if(User.getUsername() == null || User.getUsername().isEmpty()){
+
+        if(user == null){
+        //if(User.getUsername() == null || User.getUsername().isEmpty()){
             startActivity(new Intent(this, LoginActivity.class));
         }
 
@@ -109,25 +111,33 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+
         switch (item.getItemId()) {
             case R.id.nav_home:
 
                 break;
             case R.id.nav_generar_descuento:
-                transaction.replace(R.id.fragment_container, new GenerarDescuentoFragment());
+                GenerarDescuentoFragment miFragment = new GenerarDescuentoFragment();
+                miFragment.setArguments(getIntent().getExtras());
+                transaction2.replace(R.id.fragment_container, miFragment);
                 break;
             case R.id.nav_leer_qr:
-                transaction.replace(R.id.fragment_container, new LeerDescuentoFragment());
+                LeerDescuentoFragment leerDescuentoFragment = new LeerDescuentoFragment();
+                leerDescuentoFragment.setArguments(getIntent().getExtras());
+                transaction2.replace(R.id.fragment_container, leerDescuentoFragment);
                 break;
             case R.id.nav_permitir_acceso:
-                transaction.replace(R.id.fragment_container, new PermitirAccesoFragment());
+                PermitirAccesoFragment permitirAccesoFragment = new PermitirAccesoFragment();
+                permitirAccesoFragment.setArguments(getIntent().getExtras());
+                transaction2.replace(R.id.fragment_container, permitirAccesoFragment);
                 break;
             default:
 
                 break;
         }
-        transaction.addToBackStack(null);
-        transaction.commit();
+        transaction2.addToBackStack(null);
+        transaction2.commit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

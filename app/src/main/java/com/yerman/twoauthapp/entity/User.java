@@ -3,13 +3,13 @@ package com.yerman.twoauthapp.entity;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private static String username;
-    private static String pass;
-    private static String names;
-    private static String apellidos;
-    private static String phone;
+    private String username;
+    private String pass;
+    private String names;
+    private String apellidos;
+    private Long phone;
 
-    public User(String username, String pass, String names, String apellidos, String phone) {
+    public User(String username, String pass, String names, String apellidos, Long phone) {
         this.username = username;
         this.pass = pass;
         this.names = names;
@@ -18,43 +18,43 @@ public class User implements Serializable {
     }
     public User(){}
 
-    public static String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public static void setUsername(String username) {
-        User.username = username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public static String getPass() {
+    public String getPass() {
         return pass;
     }
 
-    public static void setPass(String pass) {
-        User.pass = pass;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
-    public static String getNames() {
+    public String getNames() {
         return names;
     }
 
-    public static void setNames(String names) {
-        User.names = names;
+    public void setNames(String names) {
+        this.names = names;
     }
 
-    public static String getApellidos() {
+    public String getApellidos() {
         return apellidos;
     }
 
-    public static void setApellidos(String apellidos) {
-        User.apellidos = apellidos;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public static String getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public static void setPhone(String phone) {
-        User.phone = phone;
+    public void setPhone(Long phone) {
+        this.phone = phone;
     }
 }
